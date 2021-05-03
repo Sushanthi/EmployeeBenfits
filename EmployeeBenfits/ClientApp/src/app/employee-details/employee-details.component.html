@@ -1,0 +1,163 @@
+﻿<div class="card m-3">
+  <h5 class="card-header">Employee Registration</h5>
+  <div class="card-body">
+      <form [formGroup]="employeeRegisterForm" (ngSubmit)="onSubmit()">
+          <div class="row d-block" *ngIf="showSuccessMsg">
+              <div class="col-xs-12">
+                  <p class="alert alert-success">
+                      <strong>Registration Success!</strong>
+                  </p>
+              </div>
+          </div>
+
+          <div class="row d-block" *ngIf="showFailureMsg && isRecordAlreadyExists; else failedMessage">
+              <div class="col-xs-12">
+                  <p class="alert alert-danger">
+                      <strong>User Record Already Exists!</strong>
+                  </p>
+              </div>
+          </div>
+          <ng-template #failedMessage>
+              <div class="row d-block" *ngIf="showFailureMsg">
+                  <div class="col-xs-12">
+                      <p class="alert alert-danger">
+                          <strong>Registration Failed!</strong>
+                      </p>
+                  </div>
+              </div>
+          </ng-template>
+          <div class="form-group">
+              <label>Employee ID</label>
+              <input type="text"
+                     formControlName="employeeId"
+                     class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && f.employeeId.errors }" />
+              <div *ngIf="submitted && f.employeeId.errors" class="invalid-feedback">
+                  <div *ngIf="f.employeeId.errors.required">employeeId is required</div>
+                  <div *ngIf="f.employeeId.errors.pattern">Enter only number.</div>
+                  <div *ngIf="f.employeeId.errors.minlength">
+                      must be at least 4 characters long
+                  </div>
+                  <div *ngIf="f.employeeId.errors.maxlength">
+                      must be at least 6 characters long
+                  </div>
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-5">
+                  <label>First Name</label>
+                  <input type="text"
+                         formControlName="firstName"
+                         class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                  <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                      <div *ngIf="f.firstName.errors.required">
+                          First Name is required
+                      </div>
+                      <div *ngIf="f.firstName.errors.pattern">
+                          No special characters allowed
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group col-5">
+                  <label>Last Name</label>
+                  <input type="text"
+                         formControlName="lastName"
+                         class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+                  <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                      <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                      <div *ngIf="f.lastName.errors.pattern">
+                          No special characters allowed
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-5">
+                  <label>Date of Birth</label>
+                  <input type="date"
+                         formControlName="dob"
+                         class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && f.dob.errors }" />
+                  <div *ngIf="submitted && f.dob.errors" class="invalid-feedback">
+                      <div *ngIf="f.dob.errors.required">Date of Birth is required</div>
+                      <div *ngIf="f.dob.errors.pattern">
+                          Date of Birth must be a valid date in the format YYYY-MM-DD
+                      </div>
+                  </div>
+              </div>
+              <!--
+        <div class="form-row"> -->
+              <div class="form-group col-5">
+                  <label>Address</label>
+                  <input type="text"
+                         formControlName="addressLine"
+                         class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && f.addressLine.errors }" />
+                  <div *ngIf="submitted && f.addressLine.errors"
+                       class="invalid-feedback">
+                      <div *ngIf="f.addressLine.errors.required">Address is required</div>
+                  </div>
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-5">
+                  <label>Province</label>
+                  <input type="text"
+                         aria-label="Number"
+                         class="form-control"
+                         [formControl]="myControl"
+                         [matAutocomplete]="auto" />
+                  <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option *ngFor="let option of filteredOptions | async"
+                                  [value]="option">
+                          {{ option }}
+                      </mat-option>
+                  </mat-autocomplete>
+              </div>
+              <div class="form-group col-5">
+                  <label>City</label>
+                  <input type="text"
+                         formControlName="city"
+                         class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && f.city.errors }" />
+                  <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                      <div *ngIf="f.city.errors.required">City is required</div>
+                  </div>
+              </div>
+              <div class="form-group col-5">
+                  <label>Country</label>
+                  <select formControlName="country"
+                          class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.country.errors }">
+                      <option value="USA">USA</option>
+                  </select>
+                  <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                      <div *ngIf="f.country.errors.required">Country is required</div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="form-group">
+              <label>Dependents Count</label>
+              <input type="number"
+                     formControlName="dependentsCount"
+                     class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && f.dependentsCount.errors }" />
+              <div *ngIf="submitted && f.dependentsCount.errors"
+                   class="invalid-feedback">
+                  <div *ngIf="f.dependentsCount.errors.required">
+                      dependentsCount is required
+                  </div>
+              </div>
+          </div>
+          <div class="text-center">
+              <button class="btn btn-primary mr-1">Register</button>
+              <button class="btn btn-secondary" type="reset" (click)="onReset()">
+                  Cancel
+              </button>
+          </div>
+      </form>
+  </div>
+</div>

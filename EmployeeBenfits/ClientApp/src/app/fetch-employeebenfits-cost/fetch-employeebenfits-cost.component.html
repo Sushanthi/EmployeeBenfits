@@ -1,0 +1,92 @@
+﻿<div class="card m-3">
+  <h5 class="card-header">Fetch Employee Benfits Costs</h5>
+  <div class="card-body">
+      <form [formGroup]="fetchBenfitsForm" (ngSubmit)="onSubmit()">
+          <div class="row d-block" *ngIf="showFailureMsg">
+              <div class="col-xs-1">
+                  <p class="alert alert-danger">
+                      <strong>No Employee Record Found</strong>
+                  </p>
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-4">
+                  <label>Employee ID</label>
+                  <input type="text"
+                         formControlName="employeeId"
+                         class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && f.employeeId.errors }" />
+                  <div *ngIf="submitted && f.employeeId.errors"
+                       class="invalid-feedback">
+                      <div *ngIf="f.employeeId.errors.required">
+                          employeeId is required
+                      </div>
+                      <div *ngIf="f.employeeId.errors.pattern">Enter only number.</div>
+                      <div *ngIf="f.employeeId.errors.minlength">
+                          must be at least 4 characters long
+                      </div>
+                      <div *ngIf="f.employeeId.errors.maxlength">
+                          must be at least 6 characters long
+                      </div>
+                  </div>
+              </div>
+
+              <div class="form-group col-4">
+                  <label>First Name</label>
+                  <input type="text"
+                         formControlName="firstName"
+                         class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                  <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                      <div *ngIf="f.firstName.errors.required">
+                          First Name is required
+                      </div>
+                      <div *ngIf="f.firstName.errors.pattern">
+                          No special characters allowed
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group col-4">
+                  <label>Last Name</label>
+                  <input type="text"
+                         formControlName="lastName"
+                         class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+                  <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                      <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                      <div *ngIf="f.lastName.errors.pattern">
+                          No special characters allowed
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- <div class="form-row">
+      <div class="form-group col-5">
+        <label>Full Name</label>
+        <input
+          type="text"
+          formControlName="fullName"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.fullName.errors }"
+        />
+        <div *ngIf="submitted && f.fullName.errors" class="invalid-feedback">
+          <div *ngIf="f.fullName.errors.required">Full Name is required</div>
+        </div>
+      </div>
+    </div> -->
+          <div *ngIf="submitted && !f.lastName.errors && !f.firstName.errors">
+              <h5>Benfit Costs Per Pay</h5>
+              <div>Total Cost: {{ benfits.benfitsCosts }}</div>
+              <div>Net Pay: {{ benfits.netPay }}</div>
+              <div>Gross Pay: {{ benfits.grossPay }}</div>
+              <div>No Of Dependents: {{ benfits.dependentsCount }}</div>
+          </div>
+          <div class="text-center">
+              <button class="btn btn-primary mr-1">Submit</button>
+              <button class="btn btn-secondary" type="reset" (click)="onReset()">
+                  Cancel
+              </button>
+          </div>
+      </form>
+  </div>
+</div>
