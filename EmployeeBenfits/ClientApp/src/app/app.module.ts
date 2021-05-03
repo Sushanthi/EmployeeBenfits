@@ -33,6 +33,7 @@ import { MaterialModule } from './material.module';
     MaterialModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '**', redirectTo: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'employee-details', component: EmployeeDetailsComponent },
       { path: 'fetch-employeebenfits-cost', component: FetchEmployeeBenfitsCostComponent },
     ]),
